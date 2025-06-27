@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23EF4444'%3E%3Cpath d='M2.929 10.293a1 1 0 011.414 0L10 15.95l5.657-5.657a1 1 0 111.414 1.414l-6.364 6.364a1 1 0 01-1.414 0L2.929 11.707a1 1 0 010-1.414z' /%3E%3Cpath d='M10 2a.75.75 0 01.75.75v10.5a.75.75 0 01-1.5 0V2.75A.75.75 0 0110 2z' /%3E%3C/svg%3E">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pelatihan KES - PT Auto Jaya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, StrictMode } = React;
+
+        // --- ICON COMPONENTS ---
+        const IconHeartHandshake = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>;
+        const IconShieldCheck = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.917l9-3.462 9 3.462a12.02 12.02 0 00-2.382-8.94z" /></svg>;
+        const IconBrainCircuit = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 8h6M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>;
+        const IconMegaphone = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.514M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>;
+        const IconBookOpen = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.523 5.754 19 7.5 19s3.332-.477 4.5-1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.523 18.247 19 16.5 19s-3.332-.477-4.5-1.253" /></svg>;
+        const IconNewspaper = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h9M7 16h6M7 12h6M7 8h6" /></svg>;
+        const IconUsers = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
+        const IconPuzzle = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>;
+
+        // --- DATA CONSTANTS ---
+        const LEARNING_MODULES = [
+            { icon: <IconHeartHandshake />, title: "Memahami Pelanggan Otomotif", summary: "Fokus pada empati untuk membaca kebutuhan tersembunyi pelanggan.", content: [ { heading: "Mendengarkan Aktif di Showroom", points: [ "Perhatikan tidak hanya apa yang dikatakan, tetapi juga bahasa tubuh.", "Ulangi kebutuhan mereka untuk memastikan pemahaman.", "Gali lebih dalam dengan pertanyaan terbuka." ] }, { heading: "Empati Terhadap Kekhawatiran", points: [ "Validasi kekhawatiran mereka tentang biaya dan perawatan.", "Tawarkan solusi dan informasi yang menenangkan." ] } ] },
+            { icon: <IconShieldCheck />, title: "Membangun Kepercayaan", summary: "Menjadi penasihat terpercaya, bukan hanya seorang penjual.", content: [ { heading: "Transparansi adalah Kunci", points: [ "Jujur tentang kelebihan dan keterbatasan model.", "Jelaskan struktur harga dengan jelas.", "Jika tidak tahu, katakan terus terang dan cari tahu." ] }, { heading: "Konsistensi dan Tindak Lanjut", points: [ "Tepati semua janji, sekecil apa pun.", "Lakukan tindak lanjut tanpa terkesan memaksa." ] } ] },
+            { icon: <IconBrainCircuit />, title: "Mengelola Emosi Saat Negosiasi", summary: "Tetap tenang dan positif saat menghadapi tekanan atau penolakan.", content: [ { heading: "Kesadaran Diri di Bawah Tekanan", points: [ "Kenali pemicu emosi Anda.", "Ambil jeda singkat jika perlu untuk berpikir jernih.", "Fokus pada pernapasan untuk tetap tenang." ] }, { heading: "Mengubah Penolakan Menjadi Peluang", points: [ "Jangan ambil penolakan secara pribadi.", "Lihat penolakan harga sebagai sinyal untuk lebih menekankan nilai.", "Gunakan teknik 'Feel, Felt, Found'." ] } ] },
+            { icon: <IconMegaphone />, title: "Komunikasi Persuasif", summary: "Pengaruhi keputusan pelanggan secara positif dan beresonansi.", content: [ { heading: "Storytelling, Bukan Sekadar Spek", points: [ "Ceritakan 'bayangkan kenyamanan seluruh keluarga saat mudik'.", "Hubungkan fitur dengan manfaat emosional." ] }, { heading: "Menangani Keberatan dengan Elegan", points: [ "Dengarkan keberatan sampai selesai tanpa memotong.", "Akui keberatan mereka sebelum memberikan solusi.", "Siapkan jawaban berbasis fakta dan testimoni." ] } ] }
+        ];
+        const ARTICLES = [
+            { icon: <IconBookOpen />, title: "EQ dalam Penjualan Kompetitif", source: "Adaptasi dari Harvard Business Review", keyTakeaways: [ "Sales dengan EQ tinggi 2x lebih mungkin melampaui target.", "Empati memungkinkan Anda menyesuaikan 'pitch' secara real-time.", "Manajemen diri mencegah emosi negatif merusak hubungan klien.", "Kesadaran sosial membantu membaca dinamika non-verbal." ] },
+            { icon: <IconNewspaper />, title: "Seni Mendengar: Kunci Kebutuhan Pelanggan", source: "Disarikan dari Forbes", keyTakeaways: [ "Tujuan utama mendengar bukan untuk merespon, tetapi untuk memahami.", "Biarkan ada jeda hening untuk informasi berharga.", "Tanyakan 'mengapa' di balik permintaan fitur.", "Umpan balik non-verbal menunjukkan Anda terlibat penuh." ] },
+            { icon: <IconUsers />, title: "Membangun Hubungan, Bukan Transaksi", source: "Intisari dari Inc. Magazine", keyTakeaways: [ "Fokus pada nilai seumur hidup pelanggan (Lifetime Value).", "Ingat detail kecil tentang pelanggan untuk percakapan selanjutnya.", "Tawarkan bantuan tulus walau tidak langsung mengarah ke penjualan.", "Jadilah sumber informasi terpercaya tentang tren otomotif." ] }
+        ];
+        const CASE_STUDIES = [
+            { id: 1, scenario: "Seorang pelanggan datang dan langsung berkata, 'Saya lihat di online, harga mobil ini di dealer lain lebih murah 5 juta. Bisa samakan?'", options: [ { text: "Langsung bilang, 'Tidak bisa Pak, harga kami sudah pas.'", isCorrect: false, feedback: "Jawaban ini terlalu kaku dan langsung menutup pintu negosiasi. Ini bisa membuat pelanggan merasa tidak dihargai dan pergi. (Kurang Empati & Manajemen Hubungan)" }, { text: "Jawab dengan tenang, 'Terima kasih informasinya, Pak. Boleh saya tahu penawaran itu termasuk apa saja? Kadang ada perbedaan dalam paket layanan purna jual yang kami tawarkan untuk memberikan nilai lebih.'", isCorrect: true, feedback: "Pilihan terbaik. Anda memvalidasi informasi pelanggan (empati), tidak defensif (manajemen diri), dan mengarahkan percakapan ke nilai tambah yang Anda tawarkan, bukan hanya harga (komunikasi persuasif)." }, { text: "Memanggil manajer Anda segera untuk menangani pelanggan.", isCorrect: false, feedback: "Ini menunjukkan Anda kurang percaya diri dalam menangani keberatan. Sebaiknya coba tangani dulu sebelum eskalasi untuk membangun kepercayaan pelanggan pada Anda. (Kurang Manajemen Diri)" } ] },
+            { id: 2, scenario: "Setelah test drive, pelanggan terlihat ragu dan berkata, 'Saya suka mobilnya, tapi sepertinya fiturnya terlalu canggih buat saya. Saya gaptek.'", options: [ { text: "Meyakinkan, 'Ah, gampang kok Pak pakenya, nanti juga terbiasa.'", isCorrect: false, feedback: "Meskipun niatnya baik, ini meremehkan kekhawatiran pelanggan. Mereka mungkin merasa tidak didengarkan. (Kurang Empati)" }, { text: "Tunjukkan satu fitur paling berguna dan ajarkan cara pakainya. 'Saya paham, Pak. Coba kita fokus ke satu fitur dulu yang paling membantu, misalnya sensor parkir ini. Caranya simpel sekali...'", isCorrect: true, feedback: "Jawaban ini menunjukkan empati ('Saya paham'). Dengan fokus pada satu hal, Anda mengurangi rasa kewalahan pelanggan dan membangun kepercayaan mereka. (Empati & Komunikasi Efektif)" }, { text: "Menawarkan model lain yang lebih sedikit fiturnya.", isCorrect: false, feedback: "Ini terlalu cepat menyerah. Anda mungkin kehilangan peluang penjualan untuk mobil yang sebenarnya mereka sukai. Cobalah untuk mengatasi keberatan terlebih dahulu. (Kurang Komunikasi Persuasif)" } ] }
+        ];
+
+        // --- REUSABLE COMPONENTS ---
+        const Card = ({ children, className = '' }) => (
+            <div className={`bg-gray-800/50 p-6 rounded-xl shadow-lg border border-gray-700/50 ${className}`}>
+                {children}
+            </div>
+        );
+
+        const Button = ({ children, className = '', variant = 'primary', size = 'md', ...props }) => {
+            const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm';
+            const variantStyles = { primary: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500', secondary: 'bg-gray-700 text-gray-100 hover:bg-gray-600 focus:ring-gray-500' };
+            const sizeStyles = { sm: 'px-3 py-1.5 text-sm', md: 'px-4 py-2 text-base', lg: 'px-6 py-3 text-lg' };
+            return <button className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`} {...props}>{children}</button>;
+        };
+
+        // --- MAIN VIEW COMPONENTS ---
+        const Header = ({ currentView, setView }) => {
+            const navItems = [
+                { id: 'dashboard', label: 'Dashboard' }, { id: 'modules', label: 'Modul Belajar' },
+                { id: 'articles', label: 'Sumber Artikel' }, { id: 'cases', label: 'Studi Kasus' },
+            ];
+            return (
+                <header className="bg-gray-800/60 backdrop-blur-sm sticky top-0 z-50 shadow-md shadow-gray-900/50 border-b border-gray-700/50">
+                    <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-16">
+                            <div className="flex items-center">
+                                <div className="flex-shrink-0 text-white font-bold text-lg flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-red-500" viewBox="0 0 20 20" fill="currentColor"><path d="M2.929 10.293a1 1 0 011.414 0L10 15.95l5.657-5.657a1 1 0 111.414 1.414l-6.364 6.364a1 1 0 01-1.414 0L2.929 11.707a1 1 0 010-1.414z" /><path d="M10 2a.75.75 0 01.75.75v10.5a.75.75 0 01-1.5 0V2.75A.75.75 0 0110 2z" /></svg>
+                                    <div>
+                                        <span className="text-red-500">PT Auto Jaya</span>
+                                        <span className="text-xs font-medium text-gray-400 block -mt-1">Pelatihan KES</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="hidden md:block">
+                                <div className="ml-10 flex items-baseline space-x-1">
+                                    {navItems.map(item => (
+                                        <button key={item.id} onClick={() => setView(item.id)}
+                                            className={`transition-colors duration-200 text-sm font-semibold ${currentView === item.id ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'} px-4 py-2 rounded-md`}>
+                                            {item.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+            );
+        };
+
+        const Dashboard = ({ setView }) => (
+            <div className="space-y-8">
+                <div className="text-center py-8">
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+                        Selamat Datang, <span className="text-red-500">Tim Sales PT Auto Jaya</span>
+                    </h1>
+                    <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-gray-300">
+                        Platform ini dirancang untuk mempertajam senjata utama Anda: <strong>Kecerdasan Emosional & Sosial (KES)</strong>. Kuasai seni memahami pelanggan dan bangun kepercayaan untuk menutup lebih banyak penjualan.
+                    </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <Card className="flex flex-col items-center text-center p-8">
+                        <div className="p-3 bg-gray-700 rounded-full mb-4"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.523 5.754 19 7.5 19s3.332-.477 4.5-1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.523 18.247 19 16.5 19s-3.332-.477-4.5-1.253" /></svg></div>
+                        <h2 className="text-2xl font-bold text-white mb-2">Modul Pembelajaran</h2>
+                        <p className="text-gray-300 mb-6 flex-grow">Pelajari 4 pilar KES untuk skenario penjualan otomotif.</p>
+                        <Button onClick={() => setView('modules')} size="lg" className="w-full mt-auto">Mulai Belajar</Button>
+                    </Card>
+                    <Card className="flex flex-col items-center text-center p-8">
+                        <div className="p-3 bg-gray-700 rounded-full mb-4"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h9M7 16h6M7 12h6M7 8h6" /></svg></div>
+                        <h2 className="text-2xl font-bold text-white mb-2">Sumber Artikel</h2>
+                        <p className="text-gray-300 mb-6 flex-grow">Dapatkan wawasan tambahan dan perkaya pengetahuan Anda.</p>
+                        <Button onClick={() => setView('articles')} size="lg" className="w-full mt-auto">Lihat Artikel</Button>
+                    </Card>
+                    <Card className="flex flex-col items-center text-center p-8">
+                        <div className="p-3 bg-gray-700 rounded-full mb-4"><IconPuzzle /></div>
+                        <h2 className="text-2xl font-bold text-white mb-2">Studi Kasus Interaktif</h2>
+                        <p className="text-gray-300 mb-6 flex-grow">Uji pemahaman dengan skenario nyata dan dapatkan umpan balik.</p>
+                        <Button onClick={() => setView('cases')} size="lg" className="w-full mt-auto">Mulai Latihan</Button>
+                    </Card>
+                </div>
+            </div>
+        );
+
+        const ModuleCard = ({ module }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            return (
+                <div className="border border-gray-700 rounded-lg bg-gray-800/50 overflow-hidden">
+                    <button onClick={() => setIsOpen(!isOpen)} className="w-full p-5 text-left flex justify-between items-center hover:bg-gray-700/50 transition-colors duration-200">
+                        <div className="flex items-center"><div className="flex-shrink-0 mr-4 bg-gray-700 p-2 rounded-full">{module.icon}</div>
+                            <div>
+                                <h3 className="text-lg font-bold text-white">{module.title}</h3>
+                                <p className="text-sm text-gray-400 mt-1">{module.summary}</p>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 text-gray-400 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
+                        <div className="px-5 pb-5 pt-2 border-t border-gray-700/50">
+                            {module.content.map((section, index) => (
+                                <div key={index} className="mt-4">
+                                    <h4 className="font-semibold text-red-400 text-md">{section.heading}</h4>
+                                    <ul className="mt-2 space-y-2 list-disc list-inside text-gray-300">
+                                        {section.points.map((point, pIndex) => <li key={pIndex}>{point}</li>)}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        
+        const LearningModules = () => (
+            <div>
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold text-white sm:text-4xl">Modul Pembelajaran KES Otomotif</h2>
+                    <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">Klik setiap modul untuk melihat strategi dan contoh penerapan di lapangan.</p>
+                </div>
+                <div className="max-w-3xl mx-auto space-y-4">
+                    {LEARNING_MODULES.map((module, index) => <ModuleCard key={index} module={module} />)}
+                </div>
+            </div>
+        );
+
+        const ArticleSource = () => (
+             <div>
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold text-white sm:text-4xl">Sumber Artikel & Wawasan</h2>
+                    <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">Perkaya pengetahuan Anda dengan intisari dari berbagai artikel terkemuka.</p>
+                </div>
+                <div className="max-w-4xl mx-auto grid gap-6">
+                    {ARTICLES.map((article, index) => (
+                        <Card key={index} className="flex flex-col md:flex-row items-start p-6">
+                            <div className="flex-shrink-0 mr-6 mb-4 md:mb-0 bg-gray-700 p-3 rounded-full">{article.icon}</div>
+                            <div className="flex-grow">
+                                <h3 className="text-xl font-bold text-white">{article.title}</h3>
+                                <p className="text-sm text-gray-400 mt-1 mb-4 italic">{article.source}</p>
+                                <h4 className="font-semibold text-red-400 mb-2">Poin Kunci:</h4>
+                                <ul className="space-y-2 list-disc list-inside text-gray-300">
+                                    {article.keyTakeaways.map((point, pIndex) => <li key={pIndex}>{point}</li>)}
+                                </ul>
+                            </div>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        );
+        
+        const InteractiveCaseStudy = () => {
+            const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
+            const [selectedOption, setSelectedOption] = useState(null);
+            const [showFeedback, setShowFeedback] = useState(false);
+            const currentCase = CASE_STUDIES[currentCaseIndex];
+
+            const handleOptionSelect = (option) => { setSelectedOption(option); setShowFeedback(true); };
+            const handleNextCase = () => { setShowFeedback(false); setSelectedOption(null); setCurrentCaseIndex(prev => (prev + 1) % CASE_STUDIES.length); };
+
+            const getOptionClass = (option) => {
+                if (!showFeedback) return 'bg-gray-700 hover:bg-gray-600';
+                if (option.isCorrect) return 'bg-green-500/30 border-green-500 ring-2 ring-green-500';
+                if (option === selectedOption && !option.isCorrect) return 'bg-red-500/30 border-red-500';
+                return 'bg-gray-700 opacity-50 cursor-not-allowed';
+            };
+
+            return (
+                <div className="max-w-3xl mx-auto">
+                    <div className="text-center mb-12"><h2 className="text-3xl font-bold text-white sm:text-4xl">Studi Kasus Interaktif</h2><p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">Analisis skenario, pilih tindakan terbaik, dan lihat umpan baliknya.</p></div>
+                    <Card className="p-8">
+                        <p className="text-lg text-gray-300 mb-6 italic">"{currentCase.scenario}"</p>
+                        <div className="space-y-4">
+                            {currentCase.options.map((option, index) => (
+                                <button key={index} onClick={() => handleOptionSelect(option)} disabled={showFeedback}
+                                    className={`w-full text-left p-4 rounded-lg border border-transparent transition-all duration-300 ${getOptionClass(option)}`}>
+                                    {option.text}
+                                </button>
+                            ))}
+                        </div>
+                        {showFeedback && selectedOption && (
+                            <div className={`mt-6 p-4 rounded-lg border ${selectedOption.isCorrect ? 'bg-green-900/50 border-green-700' : 'bg-red-900/50 border-red-700'}`}>
+                                <h4 className={`font-bold text-lg ${selectedOption.isCorrect ? 'text-green-300' : 'text-red-300'}`}>{selectedOption.isCorrect ? 'Tindakan Tepat!' : 'Perlu Diperbaiki'}</h4>
+                                <p className="mt-2 text-gray-200">{selectedOption.feedback}</p>
+                            </div>
+                        )}
+                    </Card>
+                    {showFeedback && <div className="text-center mt-8"><Button onClick={handleNextCase} size="lg">Lanjut ke Kasus Berikutnya</Button></div>}
+                </div>
+            );
+        };
+
+        // --- APP COMPONENT ---
+        const App = () => {
+            const [currentView, setCurrentView] = useState('dashboard');
+            const renderView = () => {
+                switch (currentView) {
+                    case 'dashboard': return <Dashboard setView={setCurrentView} />;
+                    case 'modules': return <LearningModules />;
+                    case 'articles': return <ArticleSource />;
+                    case 'cases': return <InteractiveCaseStudy />;
+                    default: return <Dashboard setView={setCurrentView} />;
+                }
+            };
+            return (
+                <div className="min-h-screen bg-gray-900 text-gray-200 antialiased">
+                    <Header currentView={currentView} setView={setCurrentView} />
+                    <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto">{renderView()}</main>
+                    <footer className="text-center p-4 text-gray-500 text-sm">© 2024 PT Auto Jaya. Platform Pelatihan Internal.</footer>
+                </div>
+            );
+        };
+
+        // --- RENDER APP ---
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<StrictMode><App /></StrictMode>);
+    </script>
+</body>
+</html>
